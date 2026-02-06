@@ -54,7 +54,7 @@ export default function Home() {
       </div>
 
       {/* LANGUAGE TOGGLE */}
-      <div className="absolute top-4 right-4 z-50">
+      <div className="absolute top-6 right-20 md:top-4 md:right-4 z-50">
         <button
           onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
           className="flex items-center space-x-2 px-3 py-1.5 bg-white/50 backdrop-blur border border-black/5 rounded-full hover:bg-white transition-colors text-xs font-mono"

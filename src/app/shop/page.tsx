@@ -54,7 +54,7 @@ export default function ShopPage() {
             </div>
 
             {/* LANGUAGE TOGGLE (Quebec Compliance) */}
-            <div className="absolute top-6 right-6 z-50">
+            <div className="absolute top-6 right-20 md:right-6 z-50">
                 <button
                     onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
                     className="flex items-center space-x-2 px-4 py-2 bg-white/50 backdrop-blur border border-black/5 rounded-full hover:bg-white transition-colors text-sm font-mono"

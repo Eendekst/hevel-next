@@ -49,7 +49,7 @@ export default function ManifestoPage() {
         <main className="min-h-screen bg-[#F0F0F0] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#F0F0F0] font-sans">
 
             {/* LANGUAGE TOGGLE */}
-            <div className="fixed top-6 right-6 z-50 mix-blend-difference text-white">
+            <div className="fixed top-6 right-20 md:top-6 md:right-6 z-50 mix-blend-difference text-white">
                 <button
                     onClick={() => setLang(lang === 'fr' ? 'en' : 'fr')}
                     className="flex items-center space-x-2 hover:opacity-70 transition-opacity font-mono text-sm"
