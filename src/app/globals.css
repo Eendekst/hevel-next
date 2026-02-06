@@ -1,0 +1,48 @@
+@import "tailwindcss";
+
+:root {
+  /* Hevel Design System: Paper & Ink */
+  --background: #F0F0F0;
+  /* The Paper */
+  --foreground: #0A0A0A;
+  /* The Ink */
+  --accent: #2A2A2A;
+  /* Soft Black */
+  --muted: #888888;
+  /* Muted Text */
+  --border: #E0E0E0;
+  /* Subtle Borders */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-inter), sans-serif;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Swiss Precision */
+}
+
+/* HIGH-FIDELITY GRAIN */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.05;
+  /* Subtle Texture */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
