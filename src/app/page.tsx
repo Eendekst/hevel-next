@@ -45,7 +45,8 @@ export default function Home() {
   const t = content[lang];
 
   return (
-    <main className="min-h-screen bg-[#F0F0F0] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#F0F0F0] overflow-x-hidden flex flex-col">
+    // Added pt-20 on mobile to account for fixed MobileNav
+    <main className="min-h-screen bg-[#F0F0F0] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#F0F0F0] overflow-x-hidden flex flex-col pt-20 lg:pt-0">
       {/* GLOW ACCENT BACKGROUND */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-100/30 blur-[120px] rounded-full mix-blend-multiply" />
@@ -146,6 +147,17 @@ export default function Home() {
           </motion.div>
         </motion.div>
 
+      </div>
+
+      {/* SEO / ACCESSIBILITY PRODUCT LINK (Requested) */}
+      <div className="max-w-7xl mx-auto px-6 pb-8 -mt-8 relative z-20 text-center lg:text-left">
+        <Link
+          href={heroProduct.affiliateLink}
+          target="_blank"
+          className="text-[10px] uppercase font-mono tracking-widest text-black/30 hover:text-black/60 transition-colors border-b border-transparent hover:border-black/20"
+        >
+          Audio-Technica ATH-M50xBT2 Wireless Over-Ear Headphones
+        </Link>
       </div>
 
       {/* LIFESTYLE STRIP */}
