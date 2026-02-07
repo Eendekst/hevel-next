@@ -83,6 +83,37 @@ export default function ShopPage() {
                         </h1>
                     </div>
 
+                    {/* MOBILE LAYOUT: Image & First CTA (Visible only on < lg) */}
+                    <div className="lg:hidden py-8 space-y-6">
+                        {/* 1. The Image */}
+                        <div className="relative aspect-square w-full max-w-sm mx-auto">
+                            <Image
+                                src={heroProduct.images.hero}
+                                alt={heroProduct.title}
+                                fill
+                                className="object-contain"
+                                priority
+                            />
+                        </div>
+
+                        {/* 2. Title & CTA */}
+                        <div className="space-y-4 text-center">
+                            <div>
+                                <h3 className="text-lg font-bold uppercase tracking-tight">{heroProduct.title}</h3>
+                                <p className="text-xs font-mono opacity-60 uppercase tracking-widest">{heroProduct.subtitle}</p>
+                            </div>
+                            <Link
+                                href={heroProduct.affiliateLink}
+                                target="_blank"
+                                rel="nofollow"
+                                className="flex items-center justify-center space-x-2 bg-[#0A0A0A] text-[#F0F0F0] px-6 py-3 text-sm font-bold tracking-tight w-full"
+                            >
+                                <span>{t.cta}</span>
+                                <ArrowRight className="w-4 h-4" />
+                            </Link>
+                        </div>
+                    </div>
+
                     <p className="text-xl md:text-2xl font-light max-w-lg leading-relaxed opacity-80">
                         {t.description}
                     </p>
@@ -96,6 +127,7 @@ export default function ShopPage() {
                         ))}
                     </div>
 
+                    {/* Desktop CTA / Mobile Secondary CTA */}
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
                         <Link
                             href={heroProduct.affiliateLink}
@@ -114,12 +146,12 @@ export default function ShopPage() {
                 </motion.div>
 
 
-                {/* RIGHT COLUMN: THE ARTIFACT (2.5D IMAGE) */}
+                {/* RIGHT COLUMN: THE ARTIFACT (Desktop Only) */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="relative aspect-square flex items-center justify-center"
+                    className="hidden lg:flex relative aspect-square items-center justify-center"
                 >
                     {/* "Halo" Circle behind */}
                     <div className="absolute inset-0 border border-black/5 rounded-full scale-[0.8]" />
