@@ -9,7 +9,7 @@ import { MobileNav } from "@/components/layout/MobileNav"; // Imported
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
-  title: "Hevel | High-Fidelity Audio & Digital Protocols",
+  title: "Hevel | The Brand of Tomorrow",
   description: "Sovereignty through system. The Digital Ghost Protocol. Monitor your signal, mute the noise.",
   metadataBase: new URL('https://hevel.ca'),
   openGraph: {
