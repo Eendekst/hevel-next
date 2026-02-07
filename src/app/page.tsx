@@ -37,7 +37,7 @@ export default function Home() {
           subLabel="The Voice"
           icon={<Twitter className="w-5 h-5" />}
           className="md:col-span-2 md:row-span-2"
-          variant="black"
+          backgroundImage="/socials/twitter.jpg"
           delay={0.1}
         />
 
@@ -47,6 +47,7 @@ export default function Home() {
           label="Instagram"
           subLabel="The Visual"
           icon={<Instagram className="w-5 h-5" />}
+          backgroundImage="/socials/instagram.jpg"
           delay={0.2}
         />
 
@@ -56,6 +57,7 @@ export default function Home() {
           label="YouTube"
           subLabel="The Broadcast"
           icon={<Youtube className="w-5 h-5" />}
+          backgroundImage="/socials/youtube.jpg"
           delay={0.3}
         />
 
@@ -66,7 +68,7 @@ export default function Home() {
           subLabel="The Clip"
           icon={<Video className="w-5 h-5" />} // Generic Video Icon
           className="md:row-span-2"
-          variant="white"
+          backgroundImage="/socials/tiktok.jpg"
           delay={0.4}
         />
 
@@ -76,6 +78,7 @@ export default function Home() {
           label="Medium"
           subLabel="The Thought"
           icon={<FileText className="w-5 h-5" />} // Generic Text Icon
+          backgroundImage="/socials/medium.jpg"
           delay={0.5}
         />
 
@@ -87,6 +90,7 @@ export default function Home() {
           icon={<MessagesSquare className="w-5 h-5" />} // Generic Forum Icon
           delay={0.6}
           variant="black"
+          backgroundImage="/socials/reddit.png"
         />
 
         {/* 7. PINTEREST */}
@@ -95,6 +99,7 @@ export default function Home() {
           label="Pinterest"
           subLabel="The Moodboard"
           icon={<Pin className="w-5 h-5" />}
+          backgroundImage="/socials/pinterest.jpg"
           delay={0.7}
         />
 
@@ -105,6 +110,7 @@ export default function Home() {
           subLabel="The Connection"
           icon={<Facebook className="w-5 h-5" />}
           className="md:col-span-2"
+          backgroundImage="/socials/facebook.jpg"
           delay={0.8}
         />
 
