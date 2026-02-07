@@ -12,11 +12,11 @@ export function MobileNav() {
         <div className="md:hidden fixed top-0 left-0 right-0 z-[100] p-6 flex justify-between items-center pointer-events-none">
 
             {/* 1. Logo (Always visible) */}
-            <div className="pointer-events-auto">
+            <Link href="/" className="pointer-events-auto hover:opacity-70 transition-opacity">
                 <h1 className="text-xl font-bold tracking-tighter uppercase text-black/80 backdrop-blur-sm bg-white/30 px-2 rounded-sm">
                     Hevel
                 </h1>
-            </div>
+            </Link>
 
             {/* 2. Hamburger Button */}
             <button

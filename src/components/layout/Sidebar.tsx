@@ -7,8 +7,10 @@ export function Sidebar() {
         <aside className="w-64 h-full bg-[#EAEAEA] border-r border-[#D0D0D0] flex flex-col justify-between p-6 z-50 shadow-sm relative">
             {/* Header / Logo */}
             <div>
-                <h1 className="text-2xl font-bold tracking-tighter uppercase mb-1">Hevel</h1>
-                <p className="text-xs text-muted uppercase tracking-widest mb-12">System.v1.0</p>
+                <Link href="/" className="block hover:opacity-70 transition-opacity">
+                    <h1 className="text-2xl font-bold tracking-tighter uppercase mb-1">Hevel</h1>
+                    <p className="text-xs text-muted uppercase tracking-widest mb-12">System.v1.0</p>
+                </Link>
 
                 {/* Navigation */}
                 <nav className="space-y-4">
