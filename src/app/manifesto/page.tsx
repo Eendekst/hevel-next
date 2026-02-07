@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight, Globe } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import NewsletterForm from '@/components/ui/NewsletterForm';
 
 const content = {
     fr: {
@@ -120,12 +121,24 @@ export default function ManifestoPage() {
                     </div>
                 </motion.section>
 
+                {/* THE SIGNAL (NEWSLETTER) */}
+                <motion.section
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5, duration: 1 }}
+                    className="max-w-md border-t border-black/10 pt-12"
+                >
+                    <h3 className="font-mono text-xs uppercase tracking-widest opacity-40 mb-4">The Signal</h3>
+                    <p className="mb-6 opacity-80">Join the Sodality. Receive the daily dispatch from the Ghost.</p>
+                    <NewsletterForm />
+                </motion.section>
+
                 {/* FOOTER / CTA */}
                 <motion.footer
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.6, duration: 0.8 }}
-                    className="pt-24 flex flex-col items-start space-y-8"
+                    className="pt-12 flex flex-col items-start space-y-8"
                 >
                     <p className="text-2xl md:text-3xl max-w-2xl font-serif italic">
                         &quot;{t.footer}&quot;

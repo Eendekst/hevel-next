@@ -1,4 +1,5 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+supabase_setup.sql
+supabase_gen_types.ts
 
 # dependencies
 /node_modules

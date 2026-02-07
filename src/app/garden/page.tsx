@@ -1,4 +1,5 @@
 import Link from "next/link";
+import NewsletterForm from "@/components/ui/NewsletterForm";
 
 const GARDEN_NODES = [
     {
@@ -69,9 +70,14 @@ const GARDEN_NODES = [
 export default function GardenPage() {
     return (
         <div className="max-w-6xl mx-auto p-8">
-            <header className="mb-12 border-b border-black/5 pb-4">
-                <h1 className="text-3xl font-bold tracking-tight mb-2">The Garden</h1>
-                <p className="text-muted">Growing through interconnected thought.</p>
+            <header className="mb-12 border-b border-black/5 pb-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                <div>
+                    <h1 className="text-3xl font-bold tracking-tight mb-2">The Garden</h1>
+                    <p className="text-muted">Growing through interconnected thought.</p>
+                </div>
+                <div className="w-full md:w-72">
+                    <NewsletterForm />
+                </div>
             </header>
 
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
