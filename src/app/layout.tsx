@@ -12,6 +12,11 @@ export const metadata: Metadata = {
   title: "Hevel | The Brand of Tomorrow",
   description: "Sovereignty through system. The Digital Ghost Protocol. Monitor your signal, mute the noise.",
   metadataBase: new URL('https://hevel.ca'),
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
   openGraph: {
     images: '/og-image.jpg',
   },

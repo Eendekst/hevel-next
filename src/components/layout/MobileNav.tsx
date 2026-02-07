@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { NAV_ITEMS } from '@/lib/constants';
 
+import Image from 'next/image';
+
 export function MobileNav() {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -13,9 +15,15 @@ export function MobileNav() {
 
             {/* 1. Logo (Always visible) */}
             <Link href="/" className="pointer-events-auto hover:opacity-70 transition-opacity">
-                <h1 className="text-xl font-bold tracking-tighter uppercase text-black/80 backdrop-blur-sm bg-white/30 px-2 rounded-sm">
-                    Hevel
-                </h1>
+                <div className="relative w-24 h-8 bg-white/30 backdrop-blur-sm rounded-sm px-2">
+                    <Image
+                        src="/logo.png"
+                        alt="Hevel"
+                        fill
+                        className="object-contain object-left"
+                        priority
+                    />
+                </div>
             </Link>
 
             {/* 2. Hamburger Button */}

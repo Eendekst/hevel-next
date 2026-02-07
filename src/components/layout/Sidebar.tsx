@@ -2,14 +2,23 @@ import Link from 'next/link';
 import { SOCIAL_LINKS, NAV_ITEMS } from '@/lib/constants';
 import { Twitter, Instagram, Youtube } from 'lucide-react';
 
+import Image from 'next/image';
+
 export function Sidebar() {
     return (
         <aside className="w-64 h-full bg-[#EAEAEA] border-r border-[#D0D0D0] flex flex-col justify-between p-6 z-50 shadow-sm relative">
             {/* Header / Logo */}
             <div>
-                <Link href="/" className="block hover:opacity-70 transition-opacity">
-                    <h1 className="text-2xl font-bold tracking-tighter uppercase mb-1">Hevel</h1>
-                    <p className="text-xs text-muted uppercase tracking-widest mb-12">System.v1.0</p>
+                <Link href="/" className="block hover:opacity-70 transition-opacity mb-12">
+                    <div className="relative w-32 h-8">
+                        <Image
+                            src="/logo.png"
+                            alt="Hevel"
+                            fill
+                            className="object-contain object-left"
+                            priority
+                        />
+                    </div>
                 </Link>
 
                 {/* Navigation */}
