@@ -34,8 +34,24 @@ export async function POST(request: Request) {
         await resend.emails.send({
             from: 'Jason <jason@hevel.ca>',
             to: email,
-            subject: 'Welcome to the Sodality (Hevel)',
-            html: `<p>Signal Received.</p><p>You are now connected to the Hevel frequency.</p><p>- Jason</p>`
+            subject: 'Signal Established (Hevel)',
+            html: `
+                <div style="font-family: monospace; color: #000;">
+                    <h1>Signal Established.</h1>
+                    <p>You have successfully connected to the Hevel frequency.</p>
+                    <p>This is not a newsletter. It is a signal.</p>
+                    <p>Expect low-frequency, high-value transmissions regarding:</p>
+                    <ul>
+                        <li>The Digital Ghost Protocol</li>
+                        <li>System Updates</li>
+                        <li>New Equipment</li>
+                    </ul>
+                    <p>You are now part of the network.</p>
+                    <br/>
+                    <p>Stand by.</p>
+                    <p>- Jason</p>
+                </div>
+            `
         });
 
         return NextResponse.json({ message: 'Signal Received.' }, { status: 200 });

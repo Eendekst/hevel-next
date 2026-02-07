@@ -32,7 +32,7 @@ export default function NewsletterForm() {
 
             const json = await res.json();
 
-            if (!res.ok) throw new Error(json.message);
+            if (!res.ok) throw new Error(json.error || json.message);
 
             setStatus('SUCCESS');
             setMessage(json.message);
