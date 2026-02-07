@@ -4,6 +4,8 @@ import { Resend } from 'resend';
 import { getSupabase } from '@/lib/supabaseClient';
 import { z } from 'zod';
 
+export const dynamic = 'force-dynamic'; // Prevent static pre-rendering
+
 const SubscriptionSchema = z.object({
     email: z.string().email(),
 });
@@ -38,7 +40,11 @@ export async function POST(request: Request) {
 
         return NextResponse.json({ message: 'Signal Received.' }, { status: 200 });
 
-    } catch (error) {
-        return NextResponse.json({ message: 'Transmission Failed.' }, { status: 500 });
+    } catch (error: any) {
+        console.error('SERVER ERROR:', error);
+        return NextResponse.json(
+            { message: 'Transmission Failed.', error: error.message },
+            { status: 500 }
+        );
     }
 }
