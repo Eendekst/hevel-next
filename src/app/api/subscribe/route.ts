@@ -1,10 +1,8 @@
 
 import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { supabase } from '@/lib/supabaseClient';
+import { getSupabase } from '@/lib/supabaseClient';
 import { z } from 'zod';
-
-const resend = new Resend(process.env.RESEND_API_KEY!);
 
 const SubscriptionSchema = z.object({
     email: z.string().email(),
@@ -16,6 +14,7 @@ export async function POST(request: Request) {
         const { email } = SubscriptionSchema.parse(body);
 
         // 1. Check/Insert Supabase
+        const supabase = getSupabase(); // Initialize at runtime
         const { error: dbError } = await supabase
             .from('subscribers')
             .insert([{ email }]);
@@ -28,6 +27,8 @@ export async function POST(request: Request) {
         }
 
         // 2. Send Welcome Email via Resend
+        const resend = new Resend(process.env.RESEND_API_KEY);
+
         await resend.emails.send({
             from: 'Jason <jason@hevel.ca>',
             to: email,
