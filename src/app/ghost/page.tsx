@@ -1,4 +1,4 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+// import { auth, currentUser } from "@clerk/nextjs/server";
 // import { RedirectToSignIn } from "@clerk/nextjs"; 
 
 export default async function GhostPage() {

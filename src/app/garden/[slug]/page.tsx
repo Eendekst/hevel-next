@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export default async function GardenNodePage({
     params,
 }: {
@@ -23,7 +25,7 @@ export default async function GardenNodePage({
 
                 <h3>Related Nodes</h3>
                 <ul>
-                    <li><a href="/garden/node-02">Money as Fertilizer</a></li>
+                    <li><Link href="/garden/node-02">Money as Fertilizer</Link></li>
                 </ul>
             </article>
         </div>

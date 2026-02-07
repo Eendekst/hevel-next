@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense } from 'react';
+// import { Suspense } from 'react';
 // import Spline from '@splinetool/react-spline'; // Uncomment when real asset is ready
 
 export function TheArtifact() {

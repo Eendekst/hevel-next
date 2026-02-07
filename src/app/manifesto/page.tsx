@@ -128,7 +128,7 @@ export default function ManifestoPage() {
                     className="pt-24 flex flex-col items-start space-y-8"
                 >
                     <p className="text-2xl md:text-3xl max-w-2xl font-serif italic">
-                        "{t.footer}"
+                        &quot;{t.footer}&quot;
                     </p>
 
                     <Link

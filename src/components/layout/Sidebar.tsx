@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { SOCIAL_LINKS, NAV_ITEMS } from '@/lib/constants';
-import { Twitter, Instagram, Youtube } from 'lucide-react'; // Example icons, will expand
+import { Twitter, Instagram, Youtube } from 'lucide-react';
 
 export function Sidebar() {
     return (

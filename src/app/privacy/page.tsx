@@ -7,7 +7,7 @@ export default function PrivacyPage() {
             <section className="space-y-4">
                 <h2 className="text-xl font-bold">1. Data Collection</h2>
                 <p>
-                    Hevel ("we", "us") collects minimal data necessary for analytics and transaction facilitation.
+                    Hevel (&quot;we&quot;, &quot;us&quot;) collects minimal data necessary for analytics and transaction facilitation.
                     We use **Google Analytics** to understand user behavior anonymously.
                     We do not sell your personal data.
                 </p>
