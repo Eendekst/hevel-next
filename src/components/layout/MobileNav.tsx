@@ -17,7 +17,7 @@ export function MobileNav() {
             <Link href="/" className="pointer-events-auto hover:opacity-70 transition-opacity">
                 <div className="relative w-24 h-8 bg-white/30 backdrop-blur-sm rounded-sm px-2">
                     <Image
-                        src="/logo.png"
+                        src="/logo-volcano.jpg"
                         alt="Hevel"
                         fill
                         className="object-contain object-left"

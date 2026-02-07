@@ -12,7 +12,7 @@ export function Sidebar() {
                 <Link href="/" className="block hover:opacity-70 transition-opacity mb-12">
                     <div className="relative w-32 h-8">
                         <Image
-                            src="/logo.png"
+                            src="/logo-volcano.jpg"
                             alt="Hevel"
                             fill
                             className="object-contain object-left"

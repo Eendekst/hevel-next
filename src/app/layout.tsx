@@ -13,9 +13,9 @@ export const metadata: Metadata = {
   description: "Sovereignty through system. The Digital Ghost Protocol. Monitor your signal, mute the noise.",
   metadataBase: new URL('https://hevel.ca'),
   icons: {
-    icon: '/logo.png',
-    shortcut: '/logo.png',
-    apple: '/logo.png',
+    icon: '/logo-volcano.jpg',
+    shortcut: '/logo-volcano.jpg',
+    apple: '/logo-volcano.jpg',
   },
   openGraph: {
     images: '/og-image.jpg',
