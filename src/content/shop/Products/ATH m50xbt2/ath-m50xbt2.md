@@ -1,8 +1,7 @@
----
-title: Protocol Interface
-url: 'https://www.hevel.ca/shop'
-subtitle: Audio-Technica ATH-M50xBT2
-priceLabel: Acquire Silence
+title: Audio-Technica M50xBT2
+subtitle: The Studio Standard. Wireless.
+description: "The M50xBT2 harnesses the legendary M50x studio sound for an exhilarating wireless listening experience. Mute the noise. Secure the signal."
+priceLabel: SECURE THE ASSET
 affiliateLink: 'https://amzn.to/49YWKiF'
 heroImage: /products/hero-m50x.png
 lifestyleImage: /products/lifestyle-m50x.png
