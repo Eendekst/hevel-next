@@ -67,7 +67,25 @@ export async function getPostBySlug(slug: string, collection: string = 'pages') 
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
 
-    return { meta: data, content, slug: realSlug, collection };
+    // Auto-detect Assets for Single Post
+    const fileDir = path.dirname(filePath);
+    if (fs.existsSync(fileDir)) {
+        const assets = fs.readdirSync(fileDir);
+        const parentFolder = path.basename(fileDir);
+
+        assets.forEach(asset => {
+            const lower = asset.toLowerCase();
+            const publicUrl = `/products/${encodeURIComponent(parentFolder)}/${encodeURIComponent(asset)}`;
+
+            if (lower.startsWith('hero') && /\.(png|jpg|webp)$/.test(lower)) {
+                data.heroImage = publicUrl;
+            } else if (lower.startsWith('card') && /\.(png|jpg|webp)$/.test(lower)) {
+                data.cardImage = publicUrl;
+            }
+        });
+    }
+
+    return { meta: data as any, content, slug: realSlug, collection };
 }
 
 export async function getAllPosts(collection: string = 'pages') {
@@ -78,9 +96,46 @@ export async function getAllPosts(collection: string = 'pages') {
         const fileContent = fs.readFileSync(filePath, 'utf8');
         const { data, content } = matter(fileContent);
         const slug = path.basename(filePath, '.md');
+        const fileDir = path.dirname(filePath);
+
+        // Auto-detect Assets (Hero *.png, Card *.png)
+        // We look in the same directory as the MD file.
+        // If found, we map them to the public URL structure: /products/<FolderName>/<FileName>
+
+        let heroImage = data.heroImage;
+        let cardImage = data.cardImage;
+        let gallery = data.gallery || [];
+
+        if (fs.existsSync(fileDir)) {
+            const assets = fs.readdirSync(fileDir);
+            const parentFolder = path.basename(fileDir); // e.g. "ATH m50xbt2"
+
+            assets.forEach(asset => {
+                const lower = asset.toLowerCase();
+                // Public URL construction
+                // Note: We need to encodeURI for spaces in folder names
+                const publicUrl = `/products/${encodeURIComponent(parentFolder)}/${encodeURIComponent(asset)}`;
+
+                if (lower.startsWith('hero') && /\.(png|jpg|webp)$/.test(lower)) {
+                    heroImage = publicUrl;
+                } else if (lower.startsWith('card') && /\.(png|jpg|webp)$/.test(lower)) {
+                    cardImage = publicUrl;
+                } else if (/\.(png|jpg|webp)$/.test(lower)) {
+                    // Add other images to gallery if not already present
+                    if (!gallery.includes(publicUrl) && publicUrl !== heroImage && publicUrl !== cardImage) {
+                        gallery.push(publicUrl);
+                    }
+                }
+            });
+        }
 
         return {
-            meta: data,
+            meta: {
+                ...data,
+                heroImage,
+                cardImage,
+                gallery
+            } as any, // Explicit cast to allow dynamic frontmatter access
             content,
             slug,
             collection

@@ -50,7 +50,7 @@ export default async function ShopIndex() {
                 {featured && (
                     <section className="relative w-full h-[60vh] md:h-[70vh] rounded-sm overflow-hidden group">
                         <Image
-                            src={featured.meta.heroImage || featured.meta.lifestyleImage}
+                            src={featured.meta.heroImage || "/shop/placeholder-hero.jpg"}
                             alt={featured.meta.title}
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
@@ -59,7 +59,7 @@ export default async function ShopIndex() {
                             <div className="space-y-4 max-w-2xl translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                                 <div className="flex items-center space-x-3">
                                     <span className="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-sm">
-                                        FEATURED PROTOCOL
+                                        FEATURED ASSET
                                     </span>
                                     {featuredDiscount > 0 && (
                                         <span className="text-green-400 font-mono text-sm tracking-widest">
@@ -78,7 +78,7 @@ export default async function ShopIndex() {
                                         href={`/shop/${featured.slug}`}
                                         className="inline-flex items-center space-x-2 bg-white text-black px-8 py-4 font-bold tracking-tight hover:bg-gray-200 transition-colors"
                                     >
-                                        <span>INSPECT PROTOCOL</span>
+                                        <span>INSPECT ASSET</span>
                                         <ArrowRight className="w-5 h-5" />
                                     </Link>
                                 </div>
@@ -100,7 +100,9 @@ export default async function ShopIndex() {
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {products.map((p: any) => {
                             const discount = getDiscount(p.meta);
-                            const image = p.meta.rickyImage || p.meta.heroImage;
+
+                            // Use CARD image for the grid if available, otherwise fallback to HERO or other
+                            const image = p.meta.cardImage || p.meta.heroImage;
 
                             return (
                                 <div key={p.slug} className="relative w-full">

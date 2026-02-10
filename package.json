@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
+    "lint": "next lint",
+    "sync-assets": "ts-node src/scripts/sync-assets.ts",
+    "prebuild": "npm run sync-assets",
+    "predev": "npm run sync-assets",
     "vapor:scan": "ts-node --project tsconfig.json src/scripts/vapor-scan.ts"
   },
   "dependencies": {

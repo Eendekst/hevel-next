@@ -21,5 +21,5 @@ lastScanned: '2026-02-10T01:53:40.519Z'
 
 The industry standard for studio monitoring, now wireless. Hybrid capabilities: Switch seamlessly between Bluetooth for deep work and wired mode for consoles or instruments. No artificial bass boost. Just the raw, objective truth of your signal.
 ![[ATH.png]]
-![[The_Digital_Ghost_Protocol__version_8.png]]
-![[The_Digital_Ghost_Protocol__version_14.png]]
+![[Card ATH.png]]
+![[Hero ATH.png]]
