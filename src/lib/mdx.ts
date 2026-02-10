@@ -5,13 +5,63 @@ import matter from 'gray-matter';
 const root = process.cwd();
 const contentDir = path.join(root, 'src', 'content');
 
+// Helper to recursively find a file by slug (filename)
+function findFileBySlug(dir: string, slug: string): string | null {
+    if (!fs.existsSync(dir)) return null;
+    const files = fs.readdirSync(dir);
+
+    for (const file of files) {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+
+        if (stat.isDirectory()) {
+            const found = findFileBySlug(fullPath, slug);
+            if (found) return found;
+        } else if (file === `${slug}.md`) {
+            return fullPath;
+        }
+    }
+    return null;
+}
+
+// Helper to recursively get all MD files
+function getAllFilesRecursively(dir: string): string[] {
+    if (!fs.existsSync(dir)) return [];
+    let results: string[] = [];
+    const list = fs.readdirSync(dir);
+
+    list.forEach(file => {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+        if (stat && stat.isDirectory()) {
+            /* Recurse into a subdirectory */
+            results = results.concat(getAllFilesRecursively(fullPath));
+        } else {
+            /* Is a file */
+            if (file.endsWith('.md')) {
+                results.push(fullPath);
+            }
+        }
+    });
+    return results;
+}
+
 // Updated to support subdirectories (collections) and .md extension for Obsidian compatibility
 export async function getPostBySlug(slug: string, collection: string = 'pages') {
-    const realSlug = slug.replace(/\.md$/, ''); // Changed from .mdx to .md
-    const filePath = path.join(contentDir, collection, `${realSlug}.md`); // Changed to .md
+    const realSlug = slug.replace(/\.md$/, '');
 
+    // First try flat path (legacy)
+    let filePath = path.join(contentDir, collection, `${realSlug}.md`);
+
+    // If not found, try deep search (recursive)
     if (!fs.existsSync(filePath)) {
-        throw new Error(`Content not found: ${collection}/${realSlug}.md`);
+        const collectionPath = path.join(contentDir, collection);
+        const deepPath = findFileBySlug(collectionPath, realSlug);
+        if (deepPath) {
+            filePath = deepPath;
+        } else {
+            throw new Error(`Content not found: ${collection}/${realSlug}.md`);
+        }
     }
 
     const fileContent = fs.readFileSync(filePath, 'utf8');
@@ -22,27 +72,20 @@ export async function getPostBySlug(slug: string, collection: string = 'pages') 
 
 export async function getAllPosts(collection: string = 'pages') {
     const collectionDir = path.join(contentDir, collection);
+    const files = getAllFilesRecursively(collectionDir);
 
-    if (!fs.existsSync(collectionDir)) {
-        return [];
-    }
-
-    const files = fs.readdirSync(collectionDir);
-
-    const posts = files.map((file) => {
-        // Only process markdown files
-        if (!file.endsWith('.md')) return null;
-
-        const fileContent = fs.readFileSync(path.join(collectionDir, file), 'utf8');
+    const posts = files.map((filePath) => {
+        const fileContent = fs.readFileSync(filePath, 'utf8');
         const { data, content } = matter(fileContent);
+        const slug = path.basename(filePath, '.md');
 
         return {
             meta: data,
             content,
-            slug: file.replace(/\.md$/, ''), // Changed to .md
+            slug,
             collection
         };
-    }).filter(Boolean) as any[]; // Filter out nulls
+    });
 
     return posts;
 }

@@ -6,17 +6,18 @@ priceLabel: Acquire Silence
 affiliateLink: 'https://amzn.to/49YWKiF'
 heroImage: /products/hero-m50x.png
 lifestyleImage: /products/lifestyle-m50x.png
+rickyImage: /shop/ricky-approved.png
 features:
   - 50-Hour Battery Life
   - Studio-Grade Neutral Sound
   - Multipoint Bluetooth Pairing
   - Zero-Latency Mode
   - Physical Control Buttons
-originalPrice: 279.00
+originalPrice: 279
 currentPrice: $219.99
 rating: 4.4
 reviews: '(33,414)'
-lastScanned: '2026-02-10T01:09:29.723Z'
+lastScanned: '2026-02-10T01:53:40.519Z'
 ---
 
 The industry standard for studio monitoring, now wireless. Hybrid capabilities: Switch seamlessly between Bluetooth for deep work and wired mode for consoles or instruments. No artificial bass boost. Just the raw, objective truth of your signal.

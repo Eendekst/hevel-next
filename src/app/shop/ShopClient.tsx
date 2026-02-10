@@ -14,6 +14,7 @@ interface ProductMeta {
     affiliateLink: string;
     heroImage: string;
     lifestyleImage: string;
+    rickyImage?: string; // New Asset
     features: string[];
     // Vapor Data
     currentPrice?: string;
@@ -55,10 +56,8 @@ export function ShopClient({ meta, content }: ShopClientProps) {
     const [lang, setLang] = useState<'en' | 'fr'>('en');
     const t = uiContent[lang];
 
-    // Calculate Discount if applicable
-    // For now, simple check if originalPrice exists. 
-    // In scan script we didn't extract original price yet, but we will assume it might be there manually or in future.
-    // We will just show currentPrice if available.
+    // Determine Hero Image (Ricky Priority)
+    const activeHero = meta.rickyImage || meta.heroImage;
 
     return (
         <main className="min-h-screen bg-[#F0F0F0] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#F0F0F0] overflow-x-hidden flex flex-col">
@@ -94,21 +93,15 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                                 <span>{t.signal}</span>
                             </div>
-                            {/* VAPOR BADGE (Dynamic Data) */}
-                            {meta.currentPrice && (
+                            {/* VAPOR BADGE (Ratings Only - Price Hidden) */}
+                            {meta.rating && (
                                 <div className="flex items-center space-x-3 bg-white/40 border border-black/5 px-3 py-1 rounded-full backdrop-blur font-mono text-xs">
-                                    <span className="font-bold">{meta.currentPrice}</span>
-                                    {meta.rating && (
-                                        <>
-                                            <span className="opacity-30">|</span>
-                                            <span className="flex items-center space-x-1">
-                                                <span>★</span>
-                                                <span>{meta.rating}</span>
-                                            </span>
-                                        </>
-                                    )}
+                                    <span className="flex items-center space-x-1">
+                                        <span>★</span>
+                                        <span>{meta.rating}</span>
+                                    </span>
                                     {meta.reviews && (
-                                        <span className="opacity-50 hidden sm:inline">[{meta.reviews} Users]</span>
+                                        <span className="opacity-50 text-[10px] hidden sm:inline">[{meta.reviews}]</span>
                                     )}
                                 </div>
                             )}
@@ -120,12 +113,11 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                     </div>
 
 
-                    {/* MOBILE LAYOUT: Image & First CTA (Visible only on < lg) */}
+                    {/* MOBILE LAYOUT: Image & CTA */}
                     <div className="lg:hidden py-8 space-y-6">
-                        {/* 1. The Image */}
                         <div className="relative aspect-square w-full max-w-sm mx-auto">
                             <Image
-                                src={meta.heroImage}
+                                src={activeHero}
                                 alt={meta.title}
                                 fill
                                 className="object-contain"
@@ -133,7 +125,6 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                             />
                         </div>
 
-                        {/* 2. Title & CTA */}
                         <div className="space-y-4 text-center">
                             <div>
                                 <h3 className="text-lg font-bold uppercase tracking-tight">{meta.title}</h3>
@@ -143,23 +134,17 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                                 href={meta.affiliateLink}
                                 target="_blank"
                                 rel="nofollow"
-                                className="flex items-center justify-center space-x-2 bg-[#0A0A0A] text-[#F0F0F0] px-6 py-3 text-sm font-bold tracking-tight w-full"
+                                className="flex items-center justify-center space-x-2 bg-[#0A0A0A] text-[#F0F0F0] px-6 py-3 text-sm font-bold tracking-tight w-full hover:bg-black/80 transition-all"
                             >
-                                <span>{meta.priceLabel}</span>
+                                <span>SECURE THE ASSET</span>
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
+                            {/* Mobile Compliance */}
+                            <p className="text-[10px] opacity-60 font-mono text-center px-4 leading-tight">{t.disclaimer}</p>
                         </div>
                     </div>
 
                     <div className="text-xl md:text-2xl font-light max-w-lg leading-relaxed opacity-80">
-                        {/* Using MDX Remote or just rendering content if passed as component */}
-                        {/* Note: since content is passed from server component as RSCObject, we might display it directly if serialized, 
-                            but here we are keeping it simple. If 'content' is the source, we use MDXRemote. 
-                            If it's just text from the body, we render it. 
-                            The server component 'MDXRemote' can be passed as children or we render plain text if the description is simple.
-                            Given the previous 'products.ts' was just a string, let's assume 'content' might be complex later.
-                            For now, strictly complying with the design, we will render it as a child.
-                        */}
                         {content}
                     </div>
 
@@ -172,21 +157,19 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                         ))}
                     </div>
 
-                    {/* Desktop CTA / Mobile Secondary CTA */}
-                    <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                    {/* Desktop CTA */}
+                    <div className="hidden lg:flex flex-col gap-2 pt-4">
                         <Link
                             href={meta.affiliateLink}
                             target="_blank"
-                            rel="nofollow" // Amazon Compliance: Nofollow for affiliate links
-                            className="group flex items-center justify-center space-x-3 bg-[#0A0A0A] text-[#F0F0F0] px-8 py-4 text-lg font-bold tracking-tight hover:bg-black/80 transition-all border border-transparent hover:scale-[1.02]"
+                            rel="nofollow"
+                            className="group flex items-center justify-center space-x-3 bg-[#0A0A0A] text-[#F0F0F0] px-8 py-4 text-lg font-bold tracking-tight hover:bg-black/80 transition-all border border-transparent hover:scale-[1.02] w-fit"
                         >
-                            <span>{meta.priceLabel}</span>
+                            <span>SECURE THE ASSET</span>
                             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </Link>
-
-                        <div className="flex items-center justify-center px-8 py-4 border border-black/10 text-sm font-mono opacity-60">
-                            PROT-ID: {meta.title}
-                        </div>
+                        {/* Desktop Compliance (Under Button) */}
+                        <p className="text-[10px] opacity-50 font-mono mt-2 max-w-md">{t.disclaimer}</p>
                     </div>
                 </motion.div>
 
@@ -196,27 +179,26 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                     initial={{ opacity: 0, scale: 0.9, y: 20 }}
                     animate={{ opacity: 1, scale: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="hidden lg:flex relative aspect-square items-center justify-center"
+                    className="hidden lg:flex relative aspect-[3/4] items-center justify-center" // Changed to Portrait Ratio for Ricky Image
                 >
                     {/* "Halo" Circle behind */}
-                    <div className="absolute inset-0 border border-black/5 rounded-full scale-[0.8]" />
-                    <div className="absolute inset-0 border border-black/5 rounded-full scale-[1.2] opacity-50" />
+                    <div className="absolute inset-0 border border-black/5 rounded-full scale-[0.8] opacity-20" />
 
                     <div className="relative w-full h-full drop-shadow-2xl hover:scale-105 transition-transform duration-700 ease-out cursor-cell">
                         <Image
-                            src={meta.heroImage}
+                            src={activeHero}
                             alt={meta.title}
                             fill
-                            className="object-contain"
+                            className="object-contain" // Contain ensures full image visible
                             priority
                         />
                     </div>
 
-                    {/* Floating Badge */}
+                    {/* Floating Badge (Battery) - Keep for tech vibes if needed, or remove if distracting. Keeping for now. */}
                     <motion.div
                         animate={{ y: [0, -10, 0] }}
                         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute -bottom-10 -right-4 bg-white/80 backdrop-blur border border-black/10 p-4 shadow-xl max-w-[200px]"
+                        className="absolute bottom-10 -right-4 bg-white/80 backdrop-blur border border-black/10 p-4 shadow-xl max-w-[200px]"
                     >
                         <div className="flex items-center space-x-2 mb-1">
                             <Battery className="w-4 h-4" />
@@ -249,9 +231,9 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                 </div>
             </Link>
 
-            {/* COMPLIANCE FOOTER */}
-            <footer className="w-full py-12 text-center opacity-80 text-sm px-6 font-mono mix-blend-multiply">
-                <p className="max-w-xl mx-auto border-t border-black/10 pt-4">{t.disclaimer}</p>
+            {/* Footer - Removed Disclaimer (Moved to CTA) */}
+            <footer className="w-full py-12 text-center opacity-30 text-xs px-6 font-mono">
+                <p>PROTOCOL_ID: {meta.title.toUpperCase()}</p>
             </footer>
 
         </main>

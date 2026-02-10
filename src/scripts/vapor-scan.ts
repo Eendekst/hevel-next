@@ -94,18 +94,37 @@ async function scanProduct(filePath: string) {
     }
 }
 
+async function getAllFilesRecursively(dir: string): Promise<string[]> {
+    if (!fs.existsSync(dir)) return [];
+    let results: string[] = [];
+    const list = fs.readdirSync(dir);
+
+    for (const file of list) {
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+        if (stat && stat.isDirectory()) {
+            results = results.concat(await getAllFilesRecursively(fullPath));
+        } else {
+            if (file.endsWith('.md')) {
+                results.push(fullPath);
+            }
+        }
+    }
+    return results;
+}
+
 async function main() {
     if (!fs.existsSync(SHOP_DIR)) {
         console.error(`[ERROR] Shop directory not found: ${SHOP_DIR}`);
         return;
     }
 
-    const files = fs.readdirSync(SHOP_DIR).filter(file => file.endsWith('.md'));
+    const files = await getAllFilesRecursively(SHOP_DIR);
 
     console.log(`[VAPOR] Starting scan for ${files.length} products...`);
 
-    for (const file of files) {
-        await scanProduct(path.join(SHOP_DIR, file));
+    for (const filePath of files) {
+        await scanProduct(filePath);
         // Random delay to be polite
         await new Promise(r => setTimeout(r, 2000 + Math.random() * 3000));
     }
