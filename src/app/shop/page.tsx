@@ -14,7 +14,20 @@ function getDiscount(meta: any) {
 }
 
 export default async function ShopIndex() {
-    const products = await getAllPosts("shop");
+    // 1. Fetch All Items in Shop Collection
+    const allShopItems = await getAllPosts("shop");
+
+    // 2. Separate "The Shop" Page Content from Products
+    const shopPage = allShopItems.find(p => p.slug === 'The Shop') || {
+        meta: {
+            title: "The Shop",
+            subtitle: "Secure The Asset",
+            description: "Protocol Archive"
+        },
+        content: ""
+    };
+
+    const products = allShopItems.filter(p => p.slug !== 'The Shop');
 
     // Sort by Discount for Hero
     const sortedByDiscount = [...products].sort((a: any, b: any) => {
@@ -77,7 +90,10 @@ export default async function ShopIndex() {
                 {/* THE GRID (Playcards) */}
                 <section>
                     <div className="flex items-center justify-between mb-8 border-b border-black/10 pb-4">
-                        <h2 className="text-2xl font-bold uppercase tracking-tight">Protocol Archive</h2>
+                        <div>
+                            <h2 className="text-2xl font-bold uppercase tracking-tight">{shopPage.meta.title}</h2>
+                            <p className="text-sm font-mono opacity-60 mt-1">{shopPage.meta.description}</p>
+                        </div>
                         <span className="font-mono text-sm opacity-50">{products.length} ASSETS</span>
                     </div>
 
