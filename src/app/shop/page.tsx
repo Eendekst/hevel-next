@@ -50,12 +50,12 @@ export default async function ShopIndex() {
                 {featured && (
                     <section className="relative w-full h-[60vh] md:h-[70vh] rounded-sm overflow-hidden group">
                         <Image
-                            src={featured.meta.rickyImage || featured.meta.heroImage}
+                            src={featured.meta.heroImage || featured.meta.lifestyleImage}
                             alt={featured.meta.title}
                             fill
                             className="object-cover transition-transform duration-1000 group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8 md:p-12 text-white">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end p-8 md:p-12 text-white">
                             <div className="space-y-4 max-w-2xl translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
                                 <div className="flex items-center space-x-3">
                                     <span className="bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest rounded-sm">
@@ -110,14 +110,14 @@ export default async function ShopIndex() {
                                         <div className="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
 
                                             {/* FRONT */}
-                                            <div className="absolute inset-0 backface-hidden bg-white border border-black/5 rounded-sm overflow-hidden">
+                                            <div className="absolute inset-0 backface-hidden bg-[#F5F5F5] border border-black/5 rounded-sm overflow-hidden">
                                                 <div className="relative w-full h-full p-6 flex flex-col items-center justify-between">
                                                     <div className="relative w-full flex-1 min-h-0">
                                                         <Image
                                                             src={image}
                                                             alt={p.meta.title}
                                                             fill
-                                                            className="object-contain p-4"
+                                                            className="object-contain p-4 mix-blend-multiply"
                                                             priority
                                                         />
                                                     </div>
