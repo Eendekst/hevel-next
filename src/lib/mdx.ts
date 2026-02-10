@@ -67,66 +67,57 @@ export async function getPostBySlug(slug: string, collection: string = 'pages') 
     const fileContent = fs.readFileSync(filePath, 'utf8');
     const { data, content } = matter(fileContent);
 
-    // Auto-detect Assets for Single Post
-    const fileDir = path.dirname(filePath);
-    if (fs.existsSync(fileDir)) {
-        const assets = fs.readdirSync(fileDir);
-        const parentFolder = path.basename(fileDir);
+    // Parse Obsidian wikilinks from markdown body
+    const { parseWikilinks, getProductFolderName } = require('./obsidian-parser');
+    const productFolder = getProductFolderName(filePath);
+    const parsedImages = parseWikilinks(content, productFolder);
 
-        assets.forEach(asset => {
-            const lower = asset.toLowerCase();
-            const publicUrl = `/products/${encodeURIComponent(parentFolder)}/${encodeURIComponent(asset)}`;
+    // Merge wikilink images with frontmatter (wikilinks take priority)
+    if (parsedImages.hero) data.heroImage = parsedImages.hero;
+    if (parsedImages.card) data.cardImage = parsedImages.card;
+    if (parsedImages.gallery.length > 0) data.gallery = parsedImages.gallery;
 
-            if (lower.startsWith('hero') && /\.(png|jpg|webp)$/.test(lower)) {
-                data.heroImage = publicUrl;
-            } else if (lower.startsWith('card') && /\.(png|jpg|webp)$/.test(lower)) {
-                data.cardImage = publicUrl;
-            }
-        });
+    // Calculate discount percentage
+    if (data.originalPrice && data.currentPrice) {
+        const current = parseFloat(String(data.currentPrice).replace(/[^0-9.]/g, ''));
+        const original = parseFloat(String(data.originalPrice));
+        if (original) {
+            data.discount = Math.round((1 - (current / original)) * 100);
+        }
     }
 
     return { meta: data as any, content, slug: realSlug, collection };
 }
 
+
 export async function getAllPosts(collection: string = 'pages') {
     const collectionDir = path.join(contentDir, collection);
     const files = getAllFilesRecursively(collectionDir);
+
+    const { parseWikilinks, getProductFolderName } = require('./obsidian-parser');
 
     const posts = files.map((filePath) => {
         const fileContent = fs.readFileSync(filePath, 'utf8');
         const { data, content } = matter(fileContent);
         const slug = path.basename(filePath, '.md');
-        const fileDir = path.dirname(filePath);
 
-        // Auto-detect Assets (Hero *.png, Card *.png)
-        // We look in the same directory as the MD file.
-        // If found, we map them to the public URL structure: /products/<FolderName>/<FileName>
+        // Parse Obsidian wikilinks
+        const productFolder = getProductFolderName(filePath);
+        const parsedImages = parseWikilinks(content, productFolder);
 
-        let heroImage = data.heroImage;
-        let cardImage = data.cardImage;
-        let gallery = data.gallery || [];
+        // Merge wikilinks with frontmatter (wikilinks take priority)
+        const heroImage = parsedImages.hero || data.heroImage;
+        const cardImage = parsedImages.card || data.cardImage;
+        const gallery = parsedImages.gallery.length > 0 ? parsedImages.gallery : (data.gallery || []);
 
-        if (fs.existsSync(fileDir)) {
-            const assets = fs.readdirSync(fileDir);
-            const parentFolder = path.basename(fileDir); // e.g. "ATH m50xbt2"
-
-            assets.forEach(asset => {
-                const lower = asset.toLowerCase();
-                // Public URL construction
-                // Note: We need to encodeURI for spaces in folder names
-                const publicUrl = `/products/${encodeURIComponent(parentFolder)}/${encodeURIComponent(asset)}`;
-
-                if (lower.startsWith('hero') && /\.(png|jpg|webp)$/.test(lower)) {
-                    heroImage = publicUrl;
-                } else if (lower.startsWith('card') && /\.(png|jpg|webp)$/.test(lower)) {
-                    cardImage = publicUrl;
-                } else if (/\.(png|jpg|webp)$/.test(lower)) {
-                    // Add other images to gallery if not already present
-                    if (!gallery.includes(publicUrl) && publicUrl !== heroImage && publicUrl !== cardImage) {
-                        gallery.push(publicUrl);
-                    }
-                }
-            });
+        // Calculate discount percentage
+        let discount = 0;
+        if (data.originalPrice && data.currentPrice) {
+            const current = parseFloat(String(data.currentPrice).replace(/[^0-9.]/g, ''));
+            const original = parseFloat(String(data.originalPrice));
+            if (original) {
+                discount = Math.round((1 - (current / original)) * 100);
+            }
         }
 
         return {
@@ -134,8 +125,9 @@ export async function getAllPosts(collection: string = 'pages') {
                 ...data,
                 heroImage,
                 cardImage,
-                gallery
-            } as any, // Explicit cast to allow dynamic frontmatter access
+                gallery,
+                discount
+            } as any,
             content,
             slug,
             collection
@@ -144,3 +136,4 @@ export async function getAllPosts(collection: string = 'pages') {
 
     return posts;
 }
+
