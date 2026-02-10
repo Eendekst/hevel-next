@@ -87,107 +87,67 @@ export default async function ShopIndex() {
                             const image = p.meta.rickyImage || p.meta.heroImage;
 
                             return (
-                                <div key={p.slug} className="group relative w-full aspect-[4/5] perspective-1000">
-                                    <div className="relative w-full h-full transition-all duration-700 transform-style-3d group-hover:rotate-y-180">
+                                <div key={p.slug} className="group relative w-full aspect-[3/4] perspective-1000">
+
+                                    {/* Flipper Container */}
+                                    <div className="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
 
                                         {/* FRONT (Image + Name) */}
-                                        <div className="absolute inset-0 backface-hidden bg-black rounded-sm overflow-hidden">
-                                            <Image
-                                                src={image}
-                                                alt={p.meta.title}
-                                                fill
-                                                className="object-cover opacity-80 group-hover:opacity-60 transition-opacity"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/90 to-transparent" />
-                                            <div className="absolute bottom-6 left-6 right-6">
-                                                <h3 className="text-3xl font-bold text-white uppercase tracking-tighter leading-none">
-                                                    {p.meta.title}
-                                                </h3>
-                                                {discount > 0 && (
-                                                    <div className="mt-2 inline-block bg-white/20 backdrop-blur px-2 py-0.5 text-xs text-white font-mono rounded-sm">
-                                                        -{discount}%
-                                                    </div>
-                                                )}
+                                        <div className="absolute inset-0 backface-hidden bg-white border border-black/5 rounded-sm overflow-hidden">
+                                            <div className="relative w-full h-full p-6 flex flex-col items-center justify-between">
+                                                <div className="relative w-full flex-1 min-h-0">
+                                                    <Image
+                                                        src={image}
+                                                        alt={p.meta.title}
+                                                        fill
+                                                        className="object-contain p-4"
+                                                        priority
+                                                    />
+                                                </div>
+                                                <div className="w-full text-center pt-4 border-t border-black/5">
+                                                    <h3 className="text-lg font-bold uppercase tracking-tight text-black/90 leading-tight">{p.meta.title}</h3>
+                                                    {discount > 0 && (
+                                                        <div className="mt-2 text-xs font-mono text-red-600 bg-red-50 inline-block px-2 py-1 rounded">
+                                                            SAVE {discount}%
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
                                         </div>
 
-                                        {/* BACK (Stats + CTA + Disclaimer) */}
-                                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0A0A0A] text-white p-8 flex flex-col justify-between rounded-sm border border-white/10">
-
-                                            <div className="space-y-6">
-                                                <div>
-                                                    <h3 className="text-2xl font-bold uppercase tracking-tight mb-1">
-                                                        {p.meta.title}
-                                                    </h3>
-                                                    <div className="flex items-center space-x-1 text-yellow-500 text-sm">
-                                                        <Star className="w-4 h-4 fill-current" />
-                                                        <span className="font-bold">{p.meta.rating}</span>
-                                                        <span className="text-gray-500 font-mono ml-2">({p.meta.reviews})</span>
-                                                    </div>
-                                                </div>
-
-                                                <p className="text-lg font-light leading-relaxed text-gray-300">
-                                                    Asymmetric Opportunity detected.
-                                                    High-fidelity signal processing verified.
-                                                </p>
-
-                                                <div className="space-y-2 font-mono text-sm opacity-60">
-                                                    {p.meta.features?.slice(0, 3).map((f: string, i: number) => (
-                                                        <div key={i} className="flex items-center space-x-2">
-                                                            <div className="w-1 h-1 bg-white" />
-                                                            <span>{f}</span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
+                                        {/* BACK (Stats + CTA) */}
+                                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0A0A0A] text-white p-8 flex flex-col justify-between rounded-sm border border-white/10 overflow-hidden">
 
                                             <div className="space-y-4">
-                                                <Link
-                                                    href={`/shop/${p.slug}`}
-                                                    className="flex items-center justify-center space-x-2 w-full bg-white text-black py-4 font-bold tracking-tight hover:bg-gray-200 transition-colors"
-                                                >
-                                                    <span>SECURE THE ASSET</span>
-                                                    <ArrowRight className="w-4 h-4" />
-                                                </Link>
-                                                <p className="text-[10px] text-center text-gray-600 font-mono leading-tight">
-                                                    Use of this link supports the protocol.
+                                                <div>
+                                                    <h3 className="text-xl font-bold uppercase tracking-tight mb-2 text-white">
+                                                        {p.meta.title}
+                                                    </h3>
+                                                    <div className="flex items-center space-x-1 text-[#FFD700] text-sm">
+                                                        <Star className="w-4 h-4 fill-current" />
+                                                        <span className="font-bold">{p.meta.rating}</span>
+                                                        <span className="text-zinc-500 font-mono ml-2">({p.meta.reviews})</span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="w-full h-px bg-white/10" />
+
+                                                <p className="text-sm font-light leading-relaxed text-zinc-300">
+                                                    {p.meta.description}
                                                 </p>
                                             </div>
 
-                                            {/* Mobile Reveal (Usually hidden on desktop, but this is the 'Back' face so it works for Touch Tap if configured, 
-                                                but user requested Static Reveal for Mobile. 
-                                                To handle Mobile Static Reveal, we need CSS Logic to disable flip and show this content below.
-                                                For now, implementing Flip Logic as requested for Desktop. Mobile overrides below.)
-                                            */}
-                                        </div>
-                                    </div>
-
-                                    {/* MOBILE STATIC REVEAL OVERRIDE */}
-                                    {/* On mobile, we hide the flippy card and show a static vertical layout */}
-                                    <div className="lg:hidden absolute inset-0 bg-white z-50 flex flex-col">
-                                        <div className="relative h-2/3 w-full bg-black">
-                                            <Image src={image} alt={p.meta.title} fill className="object-cover" />
-                                            <div className="absolute bottom-4 left-4">
-                                                <h3 className="text-2xl font-bold text-white uppercase">{p.meta.title}</h3>
-                                            </div>
-                                        </div>
-                                        <div className="flex-1 p-4 bg-[#0A0A0A] text-white flex flex-col justify-center space-y-3">
-                                            <div className="flex items-center justify-between">
-                                                <div className="flex items-center space-x-1 text-yellow-500 text-xs">
-                                                    <Star className="w-3 h-3 fill-current" />
-                                                    <span>{p.meta.rating}</span>
-                                                </div>
-                                                {discount > 0 && <span className="text-green-400 font-mono text-xs">-{discount}%</span>}
-                                            </div>
                                             <Link
                                                 href={`/shop/${p.slug}`}
-                                                className="bg-white text-black py-3 text-center text-sm font-bold uppercase w-full"
+                                                className="block w-full"
                                             >
-                                                SECURE THE ASSET
+                                                <div className="w-full bg-white text-black py-4 font-bold tracking-tight hover:bg-zinc-200 transition-colors flex items-center justify-center space-x-2 rounded-sm cursor-pointer">
+                                                    <span>SECURE THE ASSET</span>
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </div>
                                             </Link>
                                         </div>
                                     </div>
-
                                 </div>
                             );
                         })}
