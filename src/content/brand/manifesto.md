@@ -1,5 +1,6 @@
 ---
 fr:
+  url: "https://www.hevel.ca/manifesto"
   headline: "IL FAUT OBÉIR À DIEU"
   subheadline: "PLUTÔT QU'AUX HOMMES."
   reference: "Actes 5:29"
@@ -20,6 +21,7 @@ fr:
   gardenLink: "ACCÉDER AU JARDIN"
 
 en:
+  url: "https://www.hevel.ca/manifesto"
   headline: "WE MUST OBEY GOD"
   subheadline: "RATHER THAN MEN."
   reference: "Acts 5:29"
@@ -39,3 +41,37 @@ en:
   footer: "I share my learning in real-time on my digital garden. This is where I sow for tomorrow."
   gardenLink: "ENTER THE GARDEN"
 ---
+
+# IL FAUT OBÉIR À DIEU PLUTÔT QU'AUX HOMMES.
+(Actes 5:29)
+
+Parce que le monde digital est désormais le miroir de notre espèce et parce que nous sommes passionnés par l'innovation, Hevel, une marque chrétienne, est née.
+
+J'y cultive ma curiosité et ma foi. Originaire de Laval et amoureux de la mixité montréalaise, je reste ancré dans le réel tout en explorant le virtuel.
+
+**Hevel** _signifie vapeur ou vanité en hébreu._
+Ce nom nous rappelle de ne pas nous attacher au passage éphémère de ce monde, mais de fixer nos regards sur la promesse de la manifestation glorieuse de notre Sauveur.
+
+### L'ARCHITECTURE
+*   [Antigravity](https://antigravity.google/) (Structure)
+*   [Obsidian](https://obsidian.md) (Pensée)
+
+> "Je partage mon apprentissage sur mon jardin digital. C'est ici que je sème pour demain."
+
+---
+
+# WE MUST OBEY GOD RATHER THAN MEN.
+(Acts 5:29)
+
+Because the digital world is now the mirror of our species and because we are passionate about innovation, Hevel—a Christian brand—was born.
+
+Here I cultivate my curiosity and my faith. Originally from Laval and in love with Montreal's diversity, I remain anchored in the real while exploring the virtual.
+
+**Hevel** _means vapor or vanity in Hebrew._
+This name reminds us not to attach ourselves to the ephemeral passage of this world, but to fix our eyes on the promise of our Savior's glorious manifestation.
+
+### THE ARCHITECTURE
+*   [Antigravity](https://antigravity.google/) (Structure)
+*   [Obsidian](https://obsidian.md) (Thought)
+
+> "I share my learning in real-time on my digital garden. This is where I sow for tomorrow."

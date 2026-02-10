@@ -1,5 +1,6 @@
 ---
 title: "Protocol Interface"
+url: "https://www.hevel.ca/shop"
 subtitle: "Audio-Technica ATH-M50xBT2"
 priceLabel: "Acquire Silence"
 affiliateLink: "https://amzn.to/49YWKiF"

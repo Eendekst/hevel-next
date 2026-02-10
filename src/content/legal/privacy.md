@@ -1,5 +1,6 @@
 ---
 title: "Privacy Protocol"
+url: "https://www.hevel.ca/privacy"
 date: "2026-02-09"
 description: "Data Sovereignty and Affiliate Disclosure."
 ---
