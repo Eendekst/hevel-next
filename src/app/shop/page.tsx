@@ -87,67 +87,99 @@ export default async function ShopIndex() {
                             const image = p.meta.rickyImage || p.meta.heroImage;
 
                             return (
-                                <div key={p.slug} className="group relative w-full aspect-[3/4] perspective-1000">
+                                <div key={p.slug} className="relative w-full">
 
-                                    {/* Flipper Container */}
-                                    <div className="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
+                                    {/* DESKTOP: 3D FLIP CARD (Hidden on Mobile) */}
+                                    <div className="hidden lg:block group relative w-full aspect-[3/4] perspective-1000">
+                                        <div className="relative w-full h-full transition-all duration-500 transform-style-3d group-hover:rotate-y-180">
 
-                                        {/* FRONT (Image + Name) */}
-                                        <div className="absolute inset-0 backface-hidden bg-white border border-black/5 rounded-sm overflow-hidden">
-                                            <div className="relative w-full h-full p-6 flex flex-col items-center justify-between">
-                                                <div className="relative w-full flex-1 min-h-0">
-                                                    <Image
-                                                        src={image}
-                                                        alt={p.meta.title}
-                                                        fill
-                                                        className="object-contain p-4"
-                                                        priority
-                                                    />
-                                                </div>
-                                                <div className="w-full text-center pt-4 border-t border-black/5">
-                                                    <h3 className="text-lg font-bold uppercase tracking-tight text-black/90 leading-tight">{p.meta.title}</h3>
-                                                    {discount > 0 && (
-                                                        <div className="mt-2 text-xs font-mono text-red-600 bg-red-50 inline-block px-2 py-1 rounded">
-                                                            SAVE {discount}%
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        {/* BACK (Stats + CTA) */}
-                                        <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0A0A0A] text-white p-8 flex flex-col justify-between rounded-sm border border-white/10 overflow-hidden">
-
-                                            <div className="space-y-4">
-                                                <div>
-                                                    <h3 className="text-xl font-bold uppercase tracking-tight mb-2 text-white">
-                                                        {p.meta.title}
-                                                    </h3>
-                                                    <div className="flex items-center space-x-1 text-[#FFD700] text-sm">
-                                                        <Star className="w-4 h-4 fill-current" />
-                                                        <span className="font-bold">{p.meta.rating}</span>
-                                                        <span className="text-zinc-500 font-mono ml-2">({p.meta.reviews})</span>
+                                            {/* FRONT */}
+                                            <div className="absolute inset-0 backface-hidden bg-white border border-black/5 rounded-sm overflow-hidden">
+                                                <div className="relative w-full h-full p-6 flex flex-col items-center justify-between">
+                                                    <div className="relative w-full flex-1 min-h-0">
+                                                        <Image
+                                                            src={image}
+                                                            alt={p.meta.title}
+                                                            fill
+                                                            className="object-contain p-4"
+                                                            priority
+                                                        />
+                                                    </div>
+                                                    <div className="w-full text-center pt-4 border-t border-black/5">
+                                                        <h3 className="text-lg font-bold uppercase tracking-tight text-black/90 leading-tight">{p.meta.title}</h3>
+                                                        {discount > 0 && (
+                                                            <div className="mt-2 text-xs font-mono text-red-600 bg-red-50 inline-block px-2 py-1 rounded">
+                                                                SAVE {discount}%
+                                                            </div>
+                                                        )}
                                                     </div>
                                                 </div>
-
-                                                <div className="w-full h-px bg-white/10" />
-
-                                                <p className="text-sm font-light leading-relaxed text-zinc-300">
-                                                    {p.meta.description}
-                                                </p>
                                             </div>
 
-                                            <Link
-                                                href={`/shop/${p.slug}`}
-                                                className="block w-full"
-                                            >
-                                                <div className="w-full bg-white text-black py-4 font-bold tracking-tight hover:bg-zinc-200 transition-colors flex items-center justify-center space-x-2 rounded-sm cursor-pointer">
+                                            {/* BACK */}
+                                            <div className="absolute inset-0 backface-hidden rotate-y-180 bg-[#0A0A0A] text-white p-8 flex flex-col justify-between rounded-sm border border-white/10 overflow-hidden">
+                                                <div className="space-y-4">
+                                                    <div>
+                                                        <h3 className="text-xl font-bold uppercase tracking-tight mb-2 text-white">
+                                                            {p.meta.title}
+                                                        </h3>
+                                                        <div className="flex items-center space-x-1 text-[#FFD700] text-sm">
+                                                            <Star className="w-4 h-4 fill-current" />
+                                                            <span className="font-bold">{p.meta.rating}</span>
+                                                            <span className="text-zinc-500 font-mono ml-2">({p.meta.reviews})</span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="w-full h-px bg-white/10" />
+                                                    <p className="text-sm font-light leading-relaxed text-zinc-300">
+                                                        {p.meta.description}
+                                                    </p>
+                                                </div>
+                                                <Link href={`/shop/${p.slug}`} className="block w-full">
+                                                    <div className="w-full bg-white text-black py-4 font-bold tracking-tight hover:bg-zinc-200 transition-colors flex items-center justify-center space-x-2 rounded-sm cursor-pointer">
+                                                        <span>SECURE THE ASSET</span>
+                                                        <ArrowRight className="w-4 h-4" />
+                                                    </div>
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* MOBILE: STATIC STACK (Visible only on Mobile) */}
+                                    <div className="lg:hidden w-full bg-white border border-black/5 rounded-sm overflow-hidden flex flex-col">
+                                        <div className="relative w-full aspect-square bg-[#F5F5F5]">
+                                            <Image
+                                                src={image}
+                                                alt={p.meta.title}
+                                                fill
+                                                className="object-contain p-8"
+                                            />
+                                            {discount > 0 && (
+                                                <div className="absolute top-4 right-4 text-xs font-mono text-white bg-red-600 px-2 py-1 rounded-sm">
+                                                    -{discount}%
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="p-6 space-y-4 bg-white">
+                                            <div>
+                                                <h3 className="text-xl font-bold uppercase tracking-tight leading-tight mb-2">{p.meta.title}</h3>
+                                                <div className="flex items-center space-x-1 text-black/60 text-sm">
+                                                    <Star className="w-4 h-4 fill-black" />
+                                                    <span className="font-bold text-black">{p.meta.rating}</span>
+                                                    <span className="font-mono">({p.meta.reviews})</span>
+                                                </div>
+                                            </div>
+                                            <p className="text-sm text-gray-600 leading-relaxed line-clamp-3">
+                                                {p.meta.description}
+                                            </p>
+                                            <Link href={`/shop/${p.slug}`} className="block w-full">
+                                                <div className="w-full bg-black text-white py-4 font-bold tracking-tight flex items-center justify-center space-x-2 rounded-sm">
                                                     <span>SECURE THE ASSET</span>
                                                     <ArrowRight className="w-4 h-4" />
                                                 </div>
                                             </Link>
                                         </div>
                                     </div>
+
                                 </div>
                             );
                         })}
