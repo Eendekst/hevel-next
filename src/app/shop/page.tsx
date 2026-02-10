@@ -102,7 +102,7 @@ export default async function ShopIndex() {
                             const discount = getDiscount(p.meta);
 
                             // Use CARD image for the grid if available, otherwise fallback to HERO or other
-                            const image = p.meta.cardImage || p.meta.heroImage;
+                            const image = p.meta.cardImage || p.meta.heroImage || "/shop/ricky-approved.png";
 
                             return (
                                 <div key={p.slug} className="relative w-full">
@@ -117,7 +117,7 @@ export default async function ShopIndex() {
                                                     <div className="relative w-full flex-1 min-h-0">
                                                         <Image
                                                             src={image}
-                                                            alt={p.meta.title}
+                                                            alt={p.meta.title || "Product"}
                                                             fill
                                                             className="object-contain p-4 mix-blend-multiply"
                                                             priority
@@ -167,9 +167,9 @@ export default async function ShopIndex() {
                                         <div className="relative w-full aspect-square bg-[#F5F5F5]">
                                             <Image
                                                 src={image}
-                                                alt={p.meta.title}
+                                                alt={p.meta.title || "Product"}
                                                 fill
-                                                className="object-contain p-8"
+                                                className="object-contain p-8 mix-blend-multiply"
                                             />
                                             {discount > 0 && (
                                                 <div className="absolute top-4 right-4 text-xs font-mono text-white bg-red-600 px-2 py-1 rounded-sm">
