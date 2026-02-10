@@ -15,6 +15,12 @@ interface ProductMeta {
     heroImage: string;
     lifestyleImage: string;
     features: string[];
+    // Vapor Data
+    currentPrice?: string;
+    originalPrice?: string;
+    rating?: number;
+    reviews?: string;
+    lastScanned?: string;
 }
 
 interface ShopClientProps {
@@ -24,8 +30,6 @@ interface ShopClientProps {
 
 // QUEBEC COMPLIANCE (Bill 96):
 // Content must be available in French.
-// Note: In a real headless setup, we might move these strings to the MDX or a separate locale file.
-// For now, keeping the static UI strings here as they are structural.
 const uiContent = {
     en: {
         signal: "Signal Strength: 100%",
@@ -51,15 +55,20 @@ export function ShopClient({ meta, content }: ShopClientProps) {
     const [lang, setLang] = useState<'en' | 'fr'>('en');
     const t = uiContent[lang];
 
+    // Calculate Discount if applicable
+    // For now, simple check if originalPrice exists. 
+    // In scan script we didn't extract original price yet, but we will assume it might be there manually or in future.
+    // We will just show currentPrice if available.
+
     return (
         <main className="min-h-screen bg-[#F0F0F0] text-[#0A0A0A] selection:bg-[#0A0A0A] selection:text-[#F0F0F0] overflow-x-hidden flex flex-col">
-            {/* GLOW ACCENT BACKGROUND */}
+            {/* ... Background ... */}
             <div className="fixed inset-0 pointer-events-none">
                 <div className="absolute top-[-20%] left-[-10%] w-[50%] h-[50%] bg-blue-100/30 blur-[120px] rounded-full mix-blend-multiply" />
                 <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-purple-100/30 blur-[120px] rounded-full mix-blend-multiply" />
             </div>
 
-            {/* LANGUAGE TOGGLE (Quebec Compliance) */}
+            {/* LANGUAGE TOGGLE */}
             <div className="absolute top-6 right-20 md:right-6 z-50">
                 <button
                     onClick={() => setLang(lang === 'en' ? 'fr' : 'en')}
@@ -80,14 +89,36 @@ export function ShopClient({ meta, content }: ShopClientProps) {
                     className="space-y-8"
                 >
                     <div className="space-y-2">
-                        <div className="flex items-center space-x-2 opacity-50 text-sm font-mono tracking-widest uppercase">
-                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-                            <span>{t.signal}</span>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center space-x-2 opacity-50 text-sm font-mono tracking-widest uppercase">
+                                <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+                                <span>{t.signal}</span>
+                            </div>
+                            {/* VAPOR BADGE (Dynamic Data) */}
+                            {meta.currentPrice && (
+                                <div className="flex items-center space-x-3 bg-white/40 border border-black/5 px-3 py-1 rounded-full backdrop-blur font-mono text-xs">
+                                    <span className="font-bold">{meta.currentPrice}</span>
+                                    {meta.rating && (
+                                        <>
+                                            <span className="opacity-30">|</span>
+                                            <span className="flex items-center space-x-1">
+                                                <span>★</span>
+                                                <span>{meta.rating}</span>
+                                            </span>
+                                        </>
+                                    )}
+                                    {meta.reviews && (
+                                        <span className="opacity-50 hidden sm:inline">[{meta.reviews} Users]</span>
+                                    )}
+                                </div>
+                            )}
                         </div>
-                        <h1 className="text-6xl md:text-8xl font-bold tracking-tighter leading-[0.9]">
+
+                        <h1 className="text-6xl md:text-8xl font-black tracking-tighter leading-[0.9]">
                             {t.headline}
                         </h1>
                     </div>
+
 
                     {/* MOBILE LAYOUT: Image & First CTA (Visible only on < lg) */}
                     <div className="lg:hidden py-8 space-y-6">
