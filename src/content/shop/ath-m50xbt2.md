@@ -12,6 +12,7 @@ features:
   - Multipoint Bluetooth Pairing
   - Zero-Latency Mode
   - Physical Control Buttons
+originalPrice: 279.00
 currentPrice: $219.99
 rating: 4.4
 reviews: '(33,414)'

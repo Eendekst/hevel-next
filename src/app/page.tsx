@@ -1,25 +1,32 @@
-'use client';
-
 import { SocialCard } from '@/components/network/SocialCard';
 import { SOCIAL_LINKS } from '@/lib/constants';
 import { Twitter, Instagram, Youtube, Facebook, ArrowRight } from 'lucide-react';
-// Note: Lucide might not have Tiktok/Medium/Reddit icons by default in all versions. 
-// Using Text fallback or generic icons if needed, but assuming standard set or Lucide equivalents.
-// For specific brand icons not in Lucide, we can use SVG or text. 
-// Lucide has: Twitter, Instagram, Youtube, Facebook. 
-// Missing: Tiktok, Medium, Reddit, Pinterest.
-// I will use generic shapes or lucide equivalents for now or simple SVGs inline if strictly needed, 
-// but to keep it simple and consistent with the "Paper" aesthetic, I will use Lucide geometric shapes for the missing ones 
-// or import them if available. 
 import { Video, Hash, FileText, Pin, MessagesSquare } from 'lucide-react';
 import { AnnouncementBar } from '@/components/layout/AnnouncementBar';
+import { getPostBySlug } from '@/lib/mdx';
 
-export default function Home() {
+export default async function Home() {
+  // Vapor Protocol: Fetch Dynamic Discount
+  let discount = "";
+  try {
+    const { meta } = await getPostBySlug('ath-m50xbt2', 'shop');
+    const currentPrice = meta.currentPrice ? parseFloat(meta.currentPrice.replace(/[^0-9.]/g, '')) : 0;
+    const originalPrice = meta.originalPrice ? parseFloat(meta.originalPrice) : 0; // Assuming number in MD
+
+    if (currentPrice > 0 && originalPrice > 0 && currentPrice < originalPrice) {
+      const discountVal = Math.round((1 - (currentPrice / originalPrice)) * 100);
+      discount = discountVal.toString();
+    }
+  } catch (error) {
+    // Fail silently if file not found or parse error, just don't show bar
+    console.error("Vapor Protocol Error:", error);
+  }
+
   return (
     <main className="min-h-screen bg-[#F0F0F0] flex flex-col pt-20 lg:pt-0">
 
-      {/* Marketing Announcement */}
-      <AnnouncementBar />
+      {/* Marketing Announcement - Connected to Vapor Data */}
+      <AnnouncementBar discount={discount} label="Audio-Technica ATH-M50xBT2" />
 
       <div className="p-6 lg:p-12 flex flex-col">
 
